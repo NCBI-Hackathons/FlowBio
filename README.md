@@ -11,4 +11,4 @@ A fast, easy way to present complex bioinformatics pipelines to biologists, buil
 * Ability to run same command and have pipeline pick up where it left off or switch to run each part one at a time or the entire pipeline all at once. 
 * Wrapped in Nextflow. 
 
-https://github.com/NCBI-Hackathons/Autopipeline/blob/master/img/auto_pipeline.png | alt=auto_pipelines]]
+
