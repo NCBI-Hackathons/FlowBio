@@ -10,3 +10,4 @@ A fast, easy way to present complex bioinformatics pipelines to biologists, buil
 * Include warning messages throughout for steps where researchers should interpret outputs.
 * Ability to run same command and have pipeline pick up where it left off or switch to run each part one at a time or the entire pipeline all at once. 
 * Wrapped in Nextflow. 
+
