@@ -58,7 +58,7 @@ export -f summarizeQC
 function quality_assessment() {
     local sample="$1"
     local out_dir="$2"
-    fastqc --out_dir "${out_dir}" "${sample}"
+    fastqc -o "${out_dir}" -f "${sample}"
 }
 
 export -f quality_assessment
