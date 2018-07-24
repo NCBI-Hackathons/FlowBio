@@ -15,10 +15,12 @@ function fetch_data() {
     local out_dir="$2" # full path to output directory
     #   Base url listed on NCBI SRA documentation
     local base_url="ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads"
+    #   Strep path from accession name
+    acc_name=$(basename ${acc})
     #   Build rest of URL
     #   As of 2017-09-17, this format is used:
     #   /sra/sra-instant/reads/ByRun/sra/{SRR|ERR|DRR}/<first 6 characters of accession>/<accession>/<accession>.sra
-    query_url="${base_url}/${acc:0:3}/${acc:0:6}/${acc}/${acc}.sra"
+    query_url="${base_url}/${acc_name:0:3}/${acc_name:0:6}/${acc_name}/${acc_name}.sra"
     #   Go into output directory
     cd "${out_dir}/sra_files"
     wget "${query_url}"
