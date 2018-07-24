@@ -113,10 +113,10 @@ export -f Main_Variant_Analysis_GATK
 function Main_Variant_Analysis_FreeBayes() {
     local fasta_ref="$1" # What is our fasta reference?
     local bam="$2" # What is our bam?
-    local out="$3"/Variant_Analysis_FreeBayes # Where are we storing our results?
+    local out=Variant_Analysis_FreeBayes/$(basename ${2} .vcf)
 
     #   Make sure the out directory exists
-    mkdir -p "${out}"
+    mkdir -p Variant_Analysis_FreeBayes
 
     #run the tool
     freebayes --fasta-reference "${fasta_ref}" "${bam}" > "${out}"
@@ -127,7 +127,15 @@ export -f Main_Variant_Analysis_FreeBayes
 
 #   A function to run each analysis using SAMtools
 function Main_Variant_Analysis_SAMtools() {
-    
+    local fasta_ref="$1" # What is our fasta reference?
+    local bam="$2" # What is our bam?
+    local out="$3"/Variant_Analysis_FreeBayes # Where are we storing our results?
+
+    #   Make sure the out directory exists
+    mkdir -p "${out}"
+
+    #run the tool
+    freebayes --fasta-reference "${fasta_ref}" "${bam}" > "${out}"
 }
 
 #   Export the function
@@ -136,7 +144,15 @@ export -f Main_Variant_Analysis_SAMtools
 
 #   A function to run each analysis using Platypus
 function Main_Variant_Analysis_Platypus() {
-    
+    local fasta_ref="$1" # What is our fasta reference?
+    local bam="$2" # What is our bam?
+    local out="$3"/Variant_Analysis_FreeBayes # Where are we storing our results?
+
+    #   Make sure the out directory exists
+    mkdir -p "${out}"
+
+    #run the tool
+    freebayes --fasta-reference "${fasta_ref}" "${bam}" > "${out}"
 }
 
 #   Export the function
