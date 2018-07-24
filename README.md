@@ -35,7 +35,7 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
     - [x] Trimmomatic
     - [ ] Cutadapt
 - [ ] Read mapping, provide multiple tools as options - **Chaochih**
-    - [ ] BWA
+    - [x] BWA
     - [ ] Minimap2
     - [ ] Stampy
 - [ ] SAM to BAM/CRAM with Samtools - **TBD**
