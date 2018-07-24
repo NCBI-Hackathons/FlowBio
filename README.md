@@ -6,17 +6,18 @@ A fast, easy way to present complex bioinformatics pipelines to biologists, buil
 
 # To Do
 - [ ] Check if marker exists in dataset before running entire pipeline - **Chaochih**
-- [ ] Get toy dataset - **Dina**
-- [ ] Script to download data from multiple data repositories - **Dina**
-    - [ ] Figure out how to download data from each data repository - **Dina**
+- [x] Get toy dataset - **Dina**
+- [ ] Commands to download data from multiple data repositories - **Dina**
+    - [ ] Wrap commands in script - **Chaochih**
 - [ ] Script to parse FastQC output and output warning messages where researcher needs to make decision - **Rob**
 - [ ] Figure out how to add additional components to Nextflow pipeline - **Anney**
-- [ ] Install Java to run Nextflow on Google server - **Anney**
-- [ ] Adapter trimming, provide multiple tools as options - **TBD**
-    - [ ] Scythe
-    - [ ] Trimmomatic
+    - [ ] Including sourcing bash scripts and using functions within bash scripts - **Anney** (**Chaochih** can help direct which functions are necessary to use)
+- [x] Install Java to run Nextflow on Google server - **Anney**
+- [ ] Adapter trimming script, provide multiple tools as options - **Chaochih**
+    - [x] Scythe
+    - [x] Trimmomatic
     - [ ] Cutadapt
-- [ ] Read mapping, provide multiple tools as options - **TBD**
+- [ ] Read mapping, provide multiple tools as options - **Chaochih**
     - [ ] BWA
     - [ ] Minimap2
     - [ ] Stampy
@@ -25,8 +26,12 @@ A fast, easy way to present complex bioinformatics pipelines to biologists, buil
     - [ ] GATK
     - [ ] Freebayes
 - [ ] Jupyter notebook - **Devante**
+- [ ] GitHub Documentation - **Devante** & **Chaochih**
 - [ ] Dockerize pipeline - **TBD**
+- [ ] Manuscript - **Dina**
 - [ ] Add support for downstream tools - **TBD**
 - [ ] GUI interface to run entire analysis based on parts selected by user (if time) - **Rob**
+
+
 
 ![auto_pipeline](https://user-images.githubusercontent.com/29574436/43094530-38ad445e-8e81-11e8-8d79-653be0fcd6b7.png)
