@@ -84,7 +84,7 @@ function aligning_paired() {
     #   (i.e. .fastq.gz, .fg.gz, .fq, etc.) or fasta files
     fwd_sample_name=$(basename "${forward_sample_file}" .fq.gz)
     rev_sample_name=$(basename "${reverse_sample_file}" .fq.gz)
-    common_name=${fwd_sample_name} # Forward and reverse sample names
+    common_name=${fwd_sample_name} # Forward and reverse sample names (may need to tweak this depending on _R1.fastq.gz or _1.fastq.gz)
     #   Assemble our read group ID
     local readGroupID=$(createReadGroupID "${sampleName}" "${project}" "${platform}")
     #   Align sample

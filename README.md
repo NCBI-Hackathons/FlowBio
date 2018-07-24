@@ -5,7 +5,7 @@ A fast, easy way to present complex bioinformatics pipelines to biologists, buil
 ![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/AF.PNG)
 
 ## Intro
-There is currently a plethora of tools that process genetic data at various stages of the workflow. With new tools and scripts popping up everyday, navigating different options for file cleaning, processing, and conversion can be difficult. Amalgamating easy-to-use tools in a centralized, dockerized application can help facilitate reproducibility by alleviating some of the burden on bioinformatists. Our application helps researchers move away from producing countless scripts for data load and processing, automating the entire workflow process by allowing users to choose from a suite of pre-defined functions and tools. Autoflow lets users choose their own adventure after an initial on the fly variant lookup. 
+There is currently a plethora of tools that process genetic data at various stages of the workflow. With new tools and scripts popping up everyday, navigating different options for file cleaning, processing, and conversion can be difficult. Amalgamating easy-to-use tools in a centralized, dockerized application can help facilitate reproducibility by alleviating some of the burden on bioinformatists. Our application helps researchers move away from producing countless scripts for data load and processing, automating the entire workflow process by allowing users to choose from a suite of pre-defined functions and tools. Autoflow lets users choose their own adventure after an initial on the fly variant lookup.
 
 ### What's the Problem
 The problem is that there are too many pipelines to ingest and run data. New pipelines appear every time a lab wants to use a particular set of tools. This prevents pipeline standardization and takes too much time to customize. Often times it is faster for experienced bioinformatists to write new pipelines because previous pipelines may be difficult to undersand and apply.
@@ -35,7 +35,7 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
     - [x] Trimmomatic
     - [ ] Cutadapt
 - [ ] Read mapping, provide multiple tools as options - **Chaochih**
-    - [ ] BWA
+    - [x] BWA
     - [ ] Minimap2
     - [ ] Stampy
 - [ ] SAM to BAM/CRAM with Samtools - **TBD**
@@ -47,10 +47,9 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
 - [ ] Jupyter notebook - **Devante**
 - [ ] GitHub Documentation - **Devante** & **Chaochih**
 - [ ] Dockerize pipeline - **TBD**
+    - [ ] Do a clean install
 - [ ] Manuscript - **Dina**
 - [ ] Add support for downstream tools - **TBD**
 - [ ] GUI interface to run entire analysis based on parts selected by user (if time) - **Rob**
-
-
 
 ![auto_pipeline](https://user-images.githubusercontent.com/29574436/43094530-38ad445e-8e81-11e8-8d79-653be0fcd6b7.png)
