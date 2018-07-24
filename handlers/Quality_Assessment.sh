@@ -55,7 +55,7 @@ function summarizeQC() {
 export -f summarizeQC
 
 #   A function to run quality assessment
-function Quality_Assessment() {
+function Main_Quality_Assessment_FastQC() {
     local sampleList="$1" # What is our list of samples?
     local out_dir="$2"/Quality_Assessment # Where are we storing our results?
     local project="$3" # What do we call our results?
@@ -76,4 +76,4 @@ function Quality_Assessment() {
     rm "${out_dir}/${project}_quality_summary_unfinished.txt"
 }
 
-export -f Quality_Assessment
+export -f Main_Quality_Assessment_FastQC
