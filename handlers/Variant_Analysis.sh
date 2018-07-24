@@ -51,13 +51,13 @@ function Loci_Analysis() {
 export -f Loci_Analysis
 
 #   A function to run each analysis
-function Variant_Analysis() {
+function Main_Variant_Analysis_GATK() {
     local vcf="$1" # What is our VCF file?
     local out="$2"/Variant_Analysis # Where are we storing our results?
     local seqhand="$3" # Where is the sequence_handling directory located?
     local barley="$4" # Is this barley?
     #   Make sure the out directory exists
-    mkdir -p "${out}" 
+    mkdir -p "${out}"
     #   What's the name of the vcf file?
     local name=$(basename ${vcf} .vcf)
     #   Generate some pdf plots using bcftools, python-epd, and texlive
@@ -99,7 +99,7 @@ function Variant_Analysis() {
         parallel -v Loci_Analysis "${to_analyze}" {} "${seqhand}" "${out}" "${name}" :::: "${seqhand}/HelperScripts/18_barley_loci/18_loci_beds.list"
         #   Create the header for the summary file
         echo -e "Loci\tVariants\tTheta_W\tTheta_Pi\tTajimas_D" > "${out}/${name}_loci_summary.txt"
-        #   Sort the summary file 
+        #   Sort the summary file
         sort "${out}/${name}_loci_summary_unfinished.txt" >> "${out}/${name}_loci_summary.txt"
         #   Remove the intermediate file
         rm "${out}/${name}_loci_summary_unfinished.txt"
@@ -107,4 +107,4 @@ function Variant_Analysis() {
 }
 
 #   Export the function
-export -f Variant_Analysis
+export -f Main_Variant_Analysis_GATK
