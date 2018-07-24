@@ -1,5 +1,5 @@
 # Autopipeline (aka autoflow)
-A fast, easy way to present complex bioinformatics pipelines to biologists, built on top of ATACFlow (https://github.com/NCBI-Hackathons/ATACFlow).
+A fast, easy way to present complex bioinformatics pipelines to biologists, built on top of [ATACFlow](https://github.com/NCBI-Hackathons/ATACFlow) and [sequence_handling](https://github.com/MorrellLAB/sequence_handling).
 
 ![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/AF.PNG)
 
