@@ -6,6 +6,8 @@ A fast, easy way to present complex bioinformatics pipelines to biologists, buil
 
 # Logo goes here
 
+![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/AF.PNG)
+
 # Intro
 There is currently a plethora of tools that process genetic data at various stages of the workflow. With new tools and scripts popping up everytday, navigating different options for file cleaning, processing, and conversion can be difficult. Amalgamating easy-to-use tools in a centralized, dockerized application can help facilitate reproducibility by alleviating some of the burden on bioinformatists. Our application helps researchers move away from producing countless scripts for data load and processing, automating the entire workflow process by allowing users to choose from a suite of pre-defined functions and tools. Autoflow lets users choose their own adventure after an initial on the fly variant lookup. 
 
@@ -17,7 +19,7 @@ Our pipeline allows users to “build” their own pipelines by selecting the pe
 
 ### Get in the flow, autoflow!
 
-
+![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/Flowchar_v2.png)
 
 # Installation
 
