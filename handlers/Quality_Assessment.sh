@@ -69,6 +69,7 @@ function Main_Quality_Assessment_FastQC() {
     local out_dir="$2"/Quality_Assessment # Where are we storing our results?
     local project="$3" # What do we call our results?
     local size="$4" # What is the size of the covered region?
+    set -x
     mkdir -p "${out_dir}/HTML_Files" "${out_dir}/Zip_Files" # Make our out_dirput directories
     #cat "${sampleList}" | parallel "fastqc --out_dir ${out_dir} {}" # Run FastQC in parallel
     parallel quality_assessment {} "${out_dir}" :::: "${sampleList}"
@@ -84,6 +85,7 @@ function Main_Quality_Assessment_FastQC() {
     tail -n +2 "${out_dir}/${project}_quality_summary_unfinished.txt" | sort >> "${out_dir}/${project}_quality_summary.txt"
     # Remove the unsorted file
     rm "${out_dir}/${project}_quality_summary_unfinished.txt"
+    set +x
 }
 
 export -f Main_Quality_Assessment_FastQC
