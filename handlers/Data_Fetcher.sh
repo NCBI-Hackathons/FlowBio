@@ -51,6 +51,7 @@ function Main_Sra_to_Fastq() {
         parallel 'fastq-dump --split-files -F --gzip --outdir ${out_dir}/raw_fastq {}' ::: "${sra_array[@]}"
     #   Else, if samples are single end, denoted with "SE" as input
     elif [ ${lib_layout} == "SE" ]
+    then
         #   Do not split files when converting from .sra to .fastq.gz
         parallel 'fastq-dump -F --gzip --outdir ${out_dir}/raw_fastq {}' ::: "${sra_array[@]}"
     else
