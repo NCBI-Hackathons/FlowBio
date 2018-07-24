@@ -55,13 +55,23 @@ function summarizeQC() {
 export -f summarizeQC
 
 #   A function to run quality assessment
+function quality_assessment() {
+    local sample="$1"
+    local out_dir="$2"
+    fastqc --out_dir "${out_dir}" "${sample}"
+}
+
+export -f quality_assessment
+
+#   Driver function
 function Main_Quality_Assessment_FastQC() {
     local sampleList="$1" # What is our list of samples?
     local out_dir="$2"/Quality_Assessment # Where are we storing our results?
     local project="$3" # What do we call our results?
     local size="$4" # What is the size of the covered region?
     mkdir -p "${out_dir}/HTML_Files" "${out_dir}/Zip_Files" # Make our out_dirput directories
-    cat "${sampleList}" | parallel "fastqc --out_dir ${out_dir} {}" # Run FastQC in parallel
+    #cat "${sampleList}" | parallel "fastqc --out_dir ${out_dir} {}" # Run FastQC in parallel
+    parallel quality_assessment {} "${out_dir}" :::: "${sampleList}"
     # Make a list of all the zip files
     local zipList=$(find "${out_dir}" -name "*.zip" | sort)
     # Add the header to the quality summary file
