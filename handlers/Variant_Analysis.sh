@@ -53,7 +53,7 @@ export -f Loci_Analysis
 #   A function to run each analysis using GATK
 function Main_Variant_Analysis_GATK() {
     local vcf="$1" # What is our VCF file?
-    local out="$2"/Variant_Analysis # Where are we storing our results?
+    local out="$2"/Variant_Analysis_GATK # Where are we storing our results?
     local seqhand="$3" # Where is the sequence_handling directory located?
     local barley="$4" # Is this barley?
     #   Make sure the out directory exists
@@ -111,58 +111,15 @@ export -f Main_Variant_Analysis_GATK
 
 #   A function to run each analysis using FreeBayes
 function Main_Variant_Analysis_FreeBayes() {
-    local vcf="$1" # What is our VCF file?
-    local out="$2"/Variant_Analysis # Where are we storing our results?
-    local seqhand="$3" # Where is the sequence_handling directory located?
-    local barley="$4" # Is this barley?
+    local fasta_ref="$1" # What is our fasta reference?
+    local bam="$2" # What is our bam?
+    local out="$3"/Variant_Analysis_FreeBayes # Where are we storing our results?
+
     #   Make sure the out directory exists
     mkdir -p "${out}"
-    #   What's the name of the vcf file?
-    local name=$(basename ${vcf} .vcf)
-    #   Generate some pdf plots using bcftools, python-epd, and texlive
-    cd "${out}"
-    plot-vcfstats <(bcftools stats ${vcf}) -p plots
-    #   Rename the combined pdf
-    mv "${out}/plots-summary.pdf" "${out}/${name}_summary.pdf"
-    #   Remove the pdf parts and junk files
-    rm plots-counts_by_af.snps.pdf plots-counts_by_af.snps.png plots-tstv_by_af.0.pdf plots-tstv_by_af.0.png plots-tstv_by_qual.0.dat plots-tstv_by_qual.0.pdf plots-tstv_by_qual.0.png plots-plot.py plots-plot-vcfstats.log plots-substitutions.0.pdf plots-substitutions.0.png plots-summary.aux plots-summary.log plots-summary.tex
-    #   Create a file with minor allele frequencies (MAF)
-    python3 "${seqhand}/HelperScripts/VCF_MAF.py" "${vcf}" > "${out}/${name}_MAF.txt"
-    #   Use R to plot the MAF file as a histogram
-    Rscript "${seqhand}/HelperScripts/plot_maf.R" "${out}/${name}_MAF.txt" "${name}" "${out}/${name}_MAF.pdf"
-    #   Calculate inbreeding coefficients and heterozygosity
-    vcftools --vcf "${vcf}" --het --out "${out}/${name}_unsorted"
-    echo -e "INDV\tO(HOM)\tE(HOM)\tN_SITES\tF" > "${out}/${name}_heterozygosity.txt"
-    tail -n +2 "${out}/${name}_unsorted.het" | sort -k 5 >> "${out}/${name}_heterozygosity.txt"
-    rm "${out}/${name}_unsorted.het"
-    #   Calculate missingness per individual
-    vcftools --vcf "${vcf}" --missing-indv --out "${out}/${name}_unsorted"
-    sort -rk 5 "${out}/${name}_unsorted.imiss" > "${out}/${name}_missingness.txt"
-    rm "${out}/${name}_unsorted.imiss"
-    #   If we have barley, do some additional analysis
-    if [[ "${barley}" == true ]]
-    then
-        #   Check to see if the VCF is pseudomolecular positions or parts positions
-        local positions=$(grep -v "#" ${vcf} | head -n 1 | grep "part")
-        #   If it's parts positions, convert the VCF to pseudomolecular positions
-        if ! [[ -z "${positions}" ]]
-        then
-            python3 "${seqhand}/HelperScripts/convert_parts_to_pseudomolecules.py" "${vcf}" > "${out}/${name}_pseudo.vcf"
-            local to_analyze="${out}/${name}_pseudo.vcf"
-        else
-            local to_analyze="${vcf}"
-        fi
-        #   Generate a list of full file paths to the bed files included in sequence_handling
-        "${seqhand}/HelperScripts/sample_list_generator.sh" ".bed" "${seqhand}/HelperScripts/18_barley_loci" "18_loci_beds.list"
-        #   Call the loci analysis function in parallel
-        parallel -v Loci_Analysis "${to_analyze}" {} "${seqhand}" "${out}" "${name}" :::: "${seqhand}/HelperScripts/18_barley_loci/18_loci_beds.list"
-        #   Create the header for the summary file
-        echo -e "Loci\tVariants\tTheta_W\tTheta_Pi\tTajimas_D" > "${out}/${name}_loci_summary.txt"
-        #   Sort the summary file
-        sort "${out}/${name}_loci_summary_unfinished.txt" >> "${out}/${name}_loci_summary.txt"
-        #   Remove the intermediate file
-        rm "${out}/${name}_loci_summary_unfinished.txt"
-    fi
+
+    #run the tool
+    freebayes --fasta-reference "${fasta_ref}" "${bam}" > "${out}"
 }
 
 #   Export the function
