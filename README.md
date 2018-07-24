@@ -40,8 +40,10 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
     - [ ] Stampy
 - [ ] SAM to BAM/CRAM with Samtools - **TBD**
 - [ ] Variant calling - **TBD**
-    - [ ] GATK
-    - [ ] Freebayes
+    - [x] GATK
+    - [x] Freebayes
+    - [ ] SAMTools
+    - [ ] Platypus
 - [ ] Jupyter notebook - **Devante**
 - [ ] GitHub Documentation - **Devante** & **Chaochih**
 - [ ] Dockerize pipeline - **TBD**
