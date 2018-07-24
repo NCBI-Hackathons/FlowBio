@@ -1,13 +1,20 @@
 #!/bin/bash
 
-#   This script generates a series of QSub submissions for read mapping.
-#   The Burrows-Wheeler Aligner (BWA) and the Portable Batch System (PBS)
-#   are required to use this script.
+#   This script uses user defined tools to do read mapping
 
 set -o pipefail
 
 #   What are the dependencies for Read_Mapping?
-declare -a Read_Mapping_Dependencies=(bwa)
+declare -a Read_Mapping_Dependencies=(bwa parallel)
+
+#   A function to make the output directory
+function make_out_dir() {
+    local out_dir="$1"
+    #   Check if out directory exists, if not make it
+    mkdir -p "${out_dir}/Read_Mapping"
+}
+
+export -f make_out_dir
 
 #   A function to parse BWA settings
 function ParseBWASettings() {
@@ -37,7 +44,6 @@ function checkIndex() {
     if [[ ! -r "${referenceDirectory}"/"${referenceName}.amb" || ! -r "${referenceDirectory}"/"${referenceName}.ann" || ! -r "${referenceDirectory}"/"${referenceName}.bwt" || ! -r "${referenceDirectory}"/"${referenceName}.pac" ||! -r "${referenceDirectory}"/"${referenceName}.sa" ]]; then echo "Reference index files do not have read permissions, exiting..." >&2; exit 1; fi # Make sure we can read the index files
 }
 
-#   Export the function
 export -f checkIndex
 
 #   A function to index the FASTA and exit
@@ -51,7 +57,6 @@ function indexReference() {
     exit 10 # Exit the script with a unique exit status
 }
 
-#   Export the function
 export -f indexReference
 
 #   A function to create our read group ID for BWA
@@ -63,52 +68,74 @@ function createReadGroupID() {
     echo "${readGroupID}" # Return our read group ID
 }
 
-#   Export the function
 export -f createReadGroupID
 
 #   Run read mapping for paired-end samples
-function Read_Mapping_Paired() {
-    local sampleName="$1" # What is the name of our sample?
-    local forwardSample="$2" # Where is the forward sample?
-    local reverseSample="$3" # Where is the reverse sample?
-    local project="$4" # What is the name of our project?
-    local platform="$5" # What platform did we sequence on?
-    local outDirectory="$6"/Read_Mapping # Where is our outdirectory?
-    local reference="$7" # Where is our reference FASTA file?
-    mkdir -p "${outDirectory}" # Make our outdirectory
-    local memSettings=$(ParseBWASettings) # Assemble our settings for BWA mem
-    local readGroupID=$(createReadGroupID "${sampleName}" "${project}" "${platform}") # Assemble our read group ID
-    (set -x; bwa mem "${memSettings}" -v 2 -R "${readGroupID}" "${reference}" "${forwardSample}" "${reverseSample}" > "${outDirectory}"/"${sampleName}".sam)
-}
-
-#   Export the function
-export -f Read_Mapping_Paired
-
-#   Run read mapping for single-end samples
-function Read_Mapping_Singles() {
-    local sampleName="$1" # What is the name of our sample?
-    local sampleFile="$2" # Where is our sample?
+function aligning_paired() {
+    local forward_sample_file="$1" # Where is the forward sample?
+    local reverse_sample_file="$2" # Where is the reverse sample?
     local project="$3" # What is the name of our project?
     local platform="$4" # What platform did we sequence on?
-    local outDirectory="$5"/Read_Mapping # Where is our outdirectory?
+    local out_dir="$5"/Read_Mapping # Where is our outdirectory?
     local reference="$6" # Where is our reference FASTA file?
-    local memSettings=$(ParseBWASettings) # Assemble our settings for BWA mem
-    local readGroupID=$(createReadGroupID "${sampleName}" "${project}" "${platform}") # Assemble our read group ID
-    #mkdir -p "${outDirectory}" # Make our outdirectory
-    bwa mem "${memSettings}" -v 2 -R "${readGroupID}" "${reference}" "${sampleFile}" > "${outDirectory}"/"${sampleName}".sam)
+    local mem_settings="$7" # Assemble our settings for BWA mem
+    #   Extract sample name from .fq.gz file
+    #   Need to modify this part later to take in variations of gzipped fastq file extensions
+    #   (i.e. .fastq.gz, .fg.gz, .fq, etc.) or fasta files
+    fwd_sample_name=$(basename "${forward_sample_file}" .fq.gz)
+    rev_sample_name=$(basename "${reverse_sample_file}" .fq.gz)
+    common_name=${fwd_sample_name} # Forward and reverse sample names
+    #   Assemble our read group ID
+    local readGroupID=$(createReadGroupID "${sampleName}" "${project}" "${platform}")
+    #   Align sample
+    bwa mem "${mem_settings}" -v 2 -R "${readGroupID}" "${reference}" "${fwd_sample_name}" "${rev_sample_name}" > "${out_dir}"/"${common_name}".sam
 }
 
-export -f Read_Mapping_Singles
+export -f aligning_paired
 
-function Read_Mapping_Parallel() {
-    local singles_trimmed="$1"
-    local single_samples="$2" # array of single samples
+function Main_Read_Mapping_Parallel_Paired() {
+    local forward_list="$1"
+    local reverse_list="$2"
     local out_dir="$3"
-    #   Check if out directory exists, if not make it
-    mkdir -p "${outDirectory}"
-    #   Create an array of single end sample names
-    single_names=($(parallel basename {} "${singles_trimmed}" ::: "${single_samples[@]}"))
+    #   Parse BWA MEM settings and assemble settings for read alignment
+    bwa_mem_settings=$(ParseBWASettings)
     #   Map reads in parallel
-    Read_Mapping_Singles "${"
-
+    parallel aligning_paired {} "${project_name}" "${seq_platform}" "${out_dir}" "${ref}" "${bwa_mem_settings}" :::: "${sample_list}"
 }
+
+export -f Main_Read_Mapping_Parallel_Paired
+
+#   Run read mapping for single-end samples
+function aligning_singles() {
+    local sample_file="$1" # What is the name of our sample?
+    local project="$2" # What is the name of our project?
+    local platform="$3" # What platform did we sequence on?
+    local out_dir="$4"/Read_Mapping # Out dir "Read_Mapping" stores outputs
+    local reference="$5" # Where is our reference FASTA file?
+    local mem_settings="$6" # Assemble our settings for BWA mem
+    #   Extract sample name from .fq.gz file
+    #   Need to modify this part later to take in variations of gzipped fastq file extensions
+    #   (i.e. .fastq.gz, .fg.gz, .fq, etc.) or fasta files
+    sample_name=$(basename "${sample_file}" .fq.gz)
+    #   Assemble our read group ID
+    local readGroupID=$(createReadGroupID "${sample_name}" "${project}" "${platform}")
+    #   Align sample
+    bwa mem "${mem_settings}" -v 2 -R "${readGroupID}" "${reference}" "${sampleFile}" > "${out_dir}/${sample_name}.sam"
+}
+
+export -f aligning_singles
+
+#   Driver function mapping single end reads in parallel with BWA MEM
+function Main_Read_Mapping_Parallel_Singles() {
+    local sample_list="$1" # list of samples
+    local project_name="$2" # project name used to name summary stats files
+    local seq_platform="$3"
+    local out_dir="$4"
+    local ref="$5"
+    #   Parse BWA MEM settings and assemble settings for read alignment
+    bwa_mem_settings=$(ParseBWASettings)
+    #   Map reads in parallel
+    parallel aligning_singles {} "${project_name}" "${seq_platform}" "${out_dir}" "${ref}" "${bwa_mem_settings}" :::: "${sample_list}"
+}
+
+export -f Main_Read_Mapping_Parallel_Singles
