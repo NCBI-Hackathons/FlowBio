@@ -14,7 +14,7 @@ function fetch_data() {
     local acc="$1" # SRRxxxxxx ID as listed in NCBI SRA RunInfo table
     local out_dir="$2" # full path to output directory
     #   Base url listed on NCBI SRA documentation
-    local base_url="ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads"
+    local base_url="ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra"
     #   Strep path from accession name
     acc_name=$(basename ${acc})
     #   Build rest of URL

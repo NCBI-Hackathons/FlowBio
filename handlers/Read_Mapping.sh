@@ -71,7 +71,7 @@ function createReadGroupID() {
 export -f createReadGroupID
 
 #   Run read mapping for paired-end samples
-function aligning_paired() {
+function align_bwa_paired() {
     local forward_sample_file="$1" # Where is the forward sample?
     local reverse_sample_file="$2" # Where is the reverse sample?
     local project="$3" # What is the name of our project?
@@ -91,22 +91,22 @@ function aligning_paired() {
     bwa mem "${mem_settings}" -v 2 -R "${readGroupID}" "${reference}" "${fwd_sample_name}" "${rev_sample_name}" > "${out_dir}"/"${common_name}".sam
 }
 
-export -f aligning_paired
+export -f align_bwa_paired
 
-function Main_Read_Mapping_Parallel_Paired() {
+function Main_Read_Mapping_BWA_PE() {
     local forward_list="$1"
     local reverse_list="$2"
     local out_dir="$3"
     #   Parse BWA MEM settings and assemble settings for read alignment
     bwa_mem_settings=$(ParseBWASettings)
     #   Map reads in parallel
-    parallel aligning_paired {} "${project_name}" "${seq_platform}" "${out_dir}" "${ref}" "${bwa_mem_settings}" :::: "${sample_list}"
+    parallel align_bwa_paired {} "${project_name}" "${seq_platform}" "${out_dir}" "${ref}" "${bwa_mem_settings}" :::: "${sample_list}"
 }
 
-export -f Main_Read_Mapping_Parallel_Paired
+export -f Main_Read_Mapping_BWA_PE
 
 #   Run read mapping for single-end samples
-function aligning_singles() {
+function align_bwa_singles() {
     local sample_file="$1" # What is the name of our sample?
     local project="$2" # What is the name of our project?
     local platform="$3" # What platform did we sequence on?
@@ -123,10 +123,10 @@ function aligning_singles() {
     bwa mem "${mem_settings}" -v 2 -R "${readGroupID}" "${reference}" "${sampleFile}" > "${out_dir}/${sample_name}.sam"
 }
 
-export -f aligning_singles
+export -f align_bwa_singles
 
 #   Driver function mapping single end reads in parallel with BWA MEM
-function Main_Read_Mapping_Parallel_Singles() {
+function Main_Read_Mapping_BWA_SE() {
     local sample_list="$1" # list of samples
     local project_name="$2" # project name used to name summary stats files
     local seq_platform="$3"
@@ -135,7 +135,31 @@ function Main_Read_Mapping_Parallel_Singles() {
     #   Parse BWA MEM settings and assemble settings for read alignment
     bwa_mem_settings=$(ParseBWASettings)
     #   Map reads in parallel
-    parallel aligning_singles {} "${project_name}" "${seq_platform}" "${out_dir}" "${ref}" "${bwa_mem_settings}" :::: "${sample_list}"
+    parallel align_bwa_singles {} "${project_name}" "${seq_platform}" "${out_dir}" "${ref}" "${bwa_mem_settings}" :::: "${sample_list}"
 }
 
-export -f Main_Read_Mapping_Parallel_Singles
+export -f Main_Read_Mapping_BWA_SE
+
+function align_minimap2_full_genome() {
+    local ref="$1"
+    local reads="$2"
+    local out_dir="$3"
+    local preset="$4"
+    #   Sample name taken from full name of gzipped FASTA file
+    sample_name=$(basename "${reads}" .fa.gz)
+    #   Full genome alignment using minimap2
+    #   asm10 is one of Minimap2 presets, change depending on organism population diversity
+    minimap2 -aLx "${preset}" "${ref}" "${reads}" > "${out_dir}"/"${sample_name}"_asm10.sam
+}
+
+export -f align_minimap2_full_genome
+
+function Main_Read_Mapping_Minimap2_FG() {
+    local ref="$1"
+    local reads_list="$2"
+    local out_dir="$3"
+    #   Read map our samples using Minimap2 full genome mode
+    parallel align_minimap2_full_genome "${ref}" {} "${out_dir}" :::: "${reads_list}"
+}
+
+export -f Main_Read_Mapping_Minimap2_FG
