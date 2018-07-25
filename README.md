@@ -26,8 +26,8 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
 # To Do
 - [ ] Check if marker exists in dataset before running entire pipeline - **Chaochih**
 - [x] Get toy dataset - **Dina**
-- [ ] Commands to download data from multiple data repositories - **Dina**
-    - [ ] Wrap commands in script - **Chaochih**
+- [x] Commands to download data from multiple data repositories - **Dina**
+    - [x] Wrap commands in script - **Chaochih**
 - [ ] Script to parse FastQC output and output warning messages where researcher needs to make decision - **Rob**
 - [ ] Figure out how to add additional components to Nextflow pipeline - **Anney**
     - [ ] Including sourcing bash scripts and using functions within bash scripts - **Anney** (**Chaochih** can help direct which functions are necessary to use)
