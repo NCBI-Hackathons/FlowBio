@@ -29,16 +29,19 @@ process Data_Fetcher{
 
 	//if (params.SRR_LIST){
 	tag "Fetch: $params.SRR_LIST"
+	println "source Data_Fetcher.sh"
 	"""
 	source Data_Fetcher.sh
-	echo "Downloading ${params.SRR_LIST} to ${params.OUT_DIR}"
-	Main_Fetch_Data ${params.SRR_LIST} ${params.OUT_DIR}
-	echo "Converting SRA to FASTQ in ${params.OUT_DIR} for ${params.LIB_LAYOUT}"
-	Main_Sra_to_Fastq ${params.LIB_LAYOUT} ${params.OUT_DIR}
-	#fastq-dump --split-3 ${sra_id}
-	# TEST THIS LATER, SHOULD BE FASTER AND DEFAULTS TO --split-3
-	#fasterq-dump ${sra_id}
 	"""
+	println "Downloading ${params.SRR_LIST} to ${params.OUT_DIR}"
+	"""
+	Main_Fetch_Data ${params.SRR_LIST} ${params.OUT_DIR}
+	"""
+	println "Converting SRA to FASTQ in ${params.OUT_DIR} for ${params.LIB_LAYOUT}"
+	"""
+	Main_Sra_to_Fastq ${params.LIB_LAYOUT} ${params.OUT_DIR}
+	"""
+
 	//}else{
 	//	println "no SRR_LIST defined"
 	//}
