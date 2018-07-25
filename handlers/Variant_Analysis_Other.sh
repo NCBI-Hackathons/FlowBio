@@ -25,13 +25,14 @@ function Main_Variant_Analysis_FreeBayes() {
 export -f Main_Variant_Analysis_FreeBayes
 
 #   A function to run each analysis using SAMtools
+#   Example Usage: source /autopipeline/handlers/Variant_Analysis_Other.sh && Main_Variant_Analysis_SAMtools "/autopipeline/data/test_data/GRCh38_reference.fa" "/autopipeline/data/test_data/test_final.bam"
 function Main_Variant_Analysis_SAMtools() { 
     local fasta_ref="$1" # What is our fasta reference?
     local bam="$2" # What is our bam?
     local out=/autopipeline/data/Variant_Analysis_SAMtools
     #   Make sure the out directory exists
     mkdir -p "${out}"
-    bcftools mpileup -f "${fasta_ref}" "${bam}" | bcftools call -mv -Ob -o "${out}/$(basename ${2} .bam)".bcf
+    bcftools mpileup -f "${fasta_ref}" "${bam}" | bcftools call -mv -Ob --output-type="v" -o "${out}/$(basename ${2} .bam)".vcf
 }
 
 #   Export the function
