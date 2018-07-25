@@ -159,37 +159,3 @@ Then transfer this file and run the pipeline with this path:
 ```bash
 nextflow run /path/to/NCBI-Hackathons/AutoFlow -with-singularity /path/to/ncbihackathons-autoflow.img
 ```
-
-
----
-
-# To Do
-- [ ] Check if marker exists in dataset before running entire pipeline - **Chaochih**
-- [x] Get toy dataset - **Dina**
-- [x] Commands to download data from multiple data repositories - **Dina**
-    - [x] Wrap commands in script - **Chaochih**
-- [ ] Script to parse FastQC output and output warning messages where researcher needs to make decision - **Rob**
-- [ ] Figure out how to add additional components to Nextflow pipeline - **Anney**
-    - [ ] Including sourcing bash scripts and using functions within bash scripts - **Anney** (**Chaochih** can help direct which functions are necessary to use)
-- [x] Install Java to run Nextflow on Google server - **Anney**
-- [ ] Adapter trimming script, provide multiple tools as options - **Chaochih**
-    - [x] Scythe
-    - [x] Trimmomatic
-    - [ ] Cutadapt
-- [ ] Read mapping, provide multiple tools as options - **Chaochih**
-    - [x] BWA
-    - [ ] Minimap2
-    - [ ] Stampy
-- [ ] SAM to BAM/CRAM with Samtools - **TBD**
-- [ ] Variant calling - **TBD**
-    - [ ] GATK
-    - [x] Freebayes
-    - [x] SAMTools
-    - [x] Platypus
-- [ ] Jupyter notebook - **Devante**
-- [ ] GitHub Documentation - **Devante** & **Chaochih**
-- [ ] Dockerize pipeline - **TBD**
-    - [ ] Do a clean install
-- [ ] Manuscript - **Dina**
-- [ ] Add support for downstream tools - **TBD**
-- [ ] GUI interface to run entire analysis based on parts selected by user (if time) - **Rob**
