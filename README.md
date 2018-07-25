@@ -1,4 +1,4 @@
-# Autopipeline (aka autoflow)
+# Autoflow
 
 ![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/logo.png)
 
@@ -12,7 +12,7 @@ There is currently a plethora of tools that process genetic data at various stag
 ### What's the Problem
 The problem is that there are too many pipelines to ingest and run data. New pipelines appear every time a lab wants to use a particular set of tools. This prevents pipeline standardization and takes too much time to customize. Often times it is faster for experienced bioinformatists to write new pipelines because previous pipelines may be difficult to undersand and apply.
 
-### How our pipeline address the problem
+### How our pipeline addresses the problem
 Our pipeline allows users to “build” their own pipelines by selecting the pieces and tools they want to include. Our pipeline goes from Fastq files to variant calls. At each stage in the process our pipeline supports multiple tools so users can pick the most appropriate tool for their organism of study. The pipeline uses NextFlow and Singularity as back-end so it follows a standard syntax and can be modified and re-used easily. This allows biologists with limited computational training to build and customize their own sequencng processing pipelines for their own studies.
 
 ### Get in the flow, autoflow!
