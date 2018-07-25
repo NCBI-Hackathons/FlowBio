@@ -53,5 +53,3 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
 - [ ] Manuscript - **Dina**
 - [ ] Add support for downstream tools - **TBD**
 - [ ] GUI interface to run entire analysis based on parts selected by user (if time) - **Rob**
-
-![auto_pipeline](https://user-images.githubusercontent.com/29574436/43094530-38ad445e-8e81-11e8-8d79-653be0fcd6b7.png)
