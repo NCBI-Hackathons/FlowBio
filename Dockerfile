@@ -101,3 +101,20 @@ RUN apt-get install -y curl grep sed dpkg && \
     apt-get clean
 
 ### end Conda
+
+conda install -n myenv FASTQC
+conda install -n myenv SCYTHE
+conda install -n myenv TIMMOMATIC
+conda install -n myenv TRIM_GALORE
+conda install -n myenv CUTADAPT
+conda install -n myenv BWA
+conda install -n myenv MINIMAP2
+conda install -n myenv BOWTIE2
+
+
+conda install -n myenv BEDTOOLS
+conda install -n myenv BEDOPS
+conda install -n myenv GATK
+conda install -n myenv FREEBAYES
+conda install -n myenv SAMTOOLS
+conda install -n myenv P
