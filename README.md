@@ -17,7 +17,7 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
 
 ### Get in the flow, autoflow!
 
-![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/Flowchar_v2.png)
+![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/Flowchart_v2.png)
 
 # Installation
 
