@@ -34,6 +34,7 @@ def helpMessage() {
       --sras                        Comma seperated list of SRAs ids 
       --genome                      Name of iGenomes reference
       --bt2index                    Path to Bowtie2 index
+      --piplelines					Name of the processes want to run in Comma seperated list							
       -profile                      Hardware config to use. docker / aws
 
     Options:
