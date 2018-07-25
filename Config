@@ -1,9 +1,6 @@
 #!/bin/bash
 
 #   Config version 2.01
-#   More complete information on how to fill out
-#       this Config file can be found at:
-#       https://github.com/MorrellLAB/sequence_handling/wiki/Configuration
 
 #   Where are we storing the output files?
 #       Final directory is ${OUT_DIR}/Name_of_Handler
@@ -11,10 +8,6 @@ OUT_DIR=
 
 #   Name this project
 PROJECT=
-
-#   What email should we use for job notifications?
-#   Only fill out if using a queue system
-EMAIL=
 
 #   What encoding is used for quality values?
 #       Look at the FastQC files to determine
@@ -35,21 +28,25 @@ SEQ_PLATFORM=
 #       Include the full file path.
 REF_GEN=
 
-#   Is this organism barley?
-#       Choose from: "true" or "false"
-BARLEY=
-
 #   Do the quality scores need to be adjusted for GATK? Default: false
 #       Change to true if you get errors from GATK like:
 #       "<Sample> appears to be using the wrong encoding for quality scores: we encountered an extremely high quality score"
 FIX_QUALITY_SCORES=false
 
 ############################################
-##########     GBS_Demultiplex    ##########
+##########      Data_Fetcher      ##########
 ############################################
 
-#   What are our QS
-GD_QSUB="mem=1gb,nodes=1:ppn=4,walltime=6:00:00"
+#   Where is our list of SRA accession run ID numbers?
+SRR_LIST=
+
+#   Are we working with single or paired end reads?
+#   Valid options are: PE and SE
+LIB_LAYOUT=
+
+############################################
+##########     GBS_Demultiplex    ##########
+############################################
 
 GBS_SAMPLES=
 
@@ -74,10 +71,6 @@ FILE_TYPE=
 ##########   Quality_Assessment   ##########
 ############################################
 
-#   What are our QSub settings for Quality_Assessment?
-#       Below are the recommended settings
-QA_QSUB="mem=1gb,nodes=1:ppn=4,walltime=6:00:00"
-
 #   Provide a list of FastQ, SAM, or BAM files to be used
 #       Include the full file path.
 QA_SAMPLES=
@@ -90,10 +83,6 @@ TARGET=
 ############################################
 ##########    Adapter_Trimming    ##########
 ############################################
-
-#   What are our QSub settings for Adapter_Trimming?
-#       Below are the recommended settings
-AT_QSUB="mem=1gb,nodes=1:ppn=4,walltime=10:00:00"
 
 #   Where is the list of original FastQ files?
 #       Include the full file path.
@@ -123,10 +112,6 @@ PRIOR=0.05
 ############################################
 ##########    Quality_Trimming    ##########
 ############################################
-
-#   What are our QSub settings for Quality_Trimming?
-#       Below are the recommended settings
-QT_QSUB="mem=1gb,nodes=1:ppn=4,walltime=10:00:00"
 
 #   Where is our list of trimmed samples? Include the full file path.
 ADAPTED_LIST=${OUT_DIR}/Adapter_Trimming/${PROJECT}_trimmed_adapters.txt
@@ -163,11 +148,6 @@ QT_THRESHOLD=
 ##########  	Read_Mapping	  ##########
 ############################################
 
-#   What are our QSub settings for Read_Mapping?
-#       Below are the recommended settings
-#       For large files, it may be necessary to use mesabi
-RM_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
-
 #   Where is our list of trimmed samples?
 #       If you're using the list from Adapter_Trimming
 #       TRIMMED_LIST=${OUT_DIR}/Adapter_Trimming/${PROJECT}_trimmed_adapters.txt
@@ -198,68 +178,49 @@ REVERSE_TRIMMED=_Reverse_ScytheTrimmed.fastq.gz
 SINGLES_TRIMMED=_Single_ScytheTrimmed.fastq.gz
 
 #   BWA mem parameters; below are the defaults for BWA mem
-#       Note that you may need to adjust parameters based on species
-#       How many threads are we using?
+#   Note that you may need to adjust parameters based on species
+#   How many threads are we using?
 THREADS=8
-
-#       What is our minimum seed length?
+#   What is our minimum seed length?
 SEED=8
-
-#       What is the band width?
+#   What is the band width?
 WIDTH=100
-
-#       What is our off-diagonal x-dropoff (Z-dropoff)?
+#   What is our off-diagonal x-dropoff (Z-dropoff)?
 DROPOFF=100
-
-#       What is our re-seed value?
+#   What is our re-seed value?
 RE_SEED=1.0
-
-#       What is our cutoff value?
+#   What is our cutoff value?
 CUTOFF=10000
-
-#       What is our matching score?
+#   What is our matching score?
 MATCH=1
-
-#       What is our mismatch penalty?
+#   What is our mismatch penalty?
 MISMATCH=4
-
-#       What is our gap penalty?
+#   What is our gap penalty?
 GAP=8
-
-#       What is our gap extension penalty?
+#   What is our gap extension penalty?
 EXTENSION=1
-
-#       What is our clipping penalty?
+#   What is our clipping penalty?
 CLIP=5
-
-#       What is our unpaired read penatly?
+#   What is our unpaired read penatly?
 UNPAIRED=9
-
-#       Do we rescue missing hits? Note, this means that reads may not be matched. Requires paired-end mode
+#   Do we rescue missing hits? Note, this means that reads may not be matched. Requires paired-end mode
 RESCUE=false
-
-#       Do we assume the first input query is interleaved?
+#   Do we assume the first input query is interleaved?
 INTERLEAVED=false
-
-#       What is our minimum threshold?
+#   What is our minimum threshold?
 RM_THRESHOLD=85
-
-#       Do we output all alignments, and mark as secondary?
+#   Do we output all alignments, and mark as secondary?
 SECONDARY=false
-
-#       Do we append FASTA/Q comments to SAM files?
+#   Do we append FASTA/Q comments to SAM files?
 APPEND=false
-
-#       Do we use hard clipping?
+#   Do we use hard clipping?
 HARD=false
-
-#       Do we mark split hits as secondary?
+#   Do we mark split hits as secondary?
 SPLIT=true
-
-#       What is the verbosity level?
-#           Choose from:
-#               'disabled', 'errors'
-#               'warnings', 'all', or 'debug'
+#   What is the verbosity level?
+#   Choose from:
+#       'disabled', 'errors'
+#       'warnings', 'all', or 'debug'
 VERBOSITY='all'
 
 ############################################
@@ -270,10 +231,6 @@ VERBOSITY='all'
 #       Choose from:
 #           'picard' (recommended) or 'samtools'
 METHOD=
-
-#   What are our QSub settings for SAM_Processing?
-#       Below are the recommended settings
-SP_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
 
 #   Where is the list of read-mapped samples?
 #       To generate this list, use sample_list_generator.sh
@@ -299,10 +256,6 @@ TMP=
 ##########    Coverage_Mapping    ##########
 ############################################
 
-#   What are our Qsub settings for Coverage_Mapping?
-#       Below are the recommended settings
-CM_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
-
 #   Where is the list of finished BAM files?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/HelperScripts/sample_list_generator.sh
@@ -317,10 +270,6 @@ REGIONS_FILE=
 ########  Realigner_Target_Creator  ########
 ############################################
 
-#   What are our Qsub settings for Realigner_Target_Creator?
-#       Below are the recommended settings
-RTC_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
-
 #   Where is the list of finished BAM files?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/HelperScripts/sample_list_generator.sh
@@ -329,10 +278,6 @@ RTC_BAM_LIST=
 ############################################
 #########     Indel_Realigner      #########
 ############################################
-
-#   What are our Qsub settings for Indel_Realigner?
-#       Below are the recommended settings
-IR_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
 
 #   Where is the list of finished BAM files?
 #       To generate this list, use sample_list_generator.sh
@@ -358,13 +303,6 @@ ENTROPY_THRESHOLD=0.10
 ##########    Haplotype_Caller    ##########
 ############################################
 
-#   What are our Qsub settings for Haplotype_Caller?
-#       Below are the recommended settings
-HC_QSUB="mem=250gb,nodes=1:ppn=24,walltime=24:00:00"
-
-#   Which queue are we submitting the job to?
-HC_QUEUE="ram256g"
-
 #   Where is the list of finished BAM files?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/HelperScripts/sample_list_generator.sh
@@ -387,11 +325,7 @@ FORCE_ACTIVE=
 ############################################
 
 #   USAGE NOTE: For accurate results, run Genotype_GVCFs on all of your samples at once
-#       DO NOT break this job into batches of samples
-
-#   What are our Qsub settings for Genotype_GVCFs?
-#       Below are the recommended settings
-GG_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
+#   DO NOT break this job into batches of samples
 
 #   Where is the list of GVCF files?
 #       To generate this list, use sample_list_generator.sh
@@ -422,10 +356,6 @@ PLOIDY=
 ############################################
 ##########    Create_HC_Subset    ##########
 ############################################
-
-#   What are our Qsub settings for Create_HC_Subset?
-#       Below are the recommended settings
-CHS_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
 
 #   Where is the list of chromosome part VCF files?
 #       To generate this list, use sample_list_generator.sh
@@ -467,13 +397,6 @@ CHS_QUAL_CUTOFF=40
 
 #   DO NOT RUN VARIANT_RECALIBRATOR IF YOU HAVE LESS THAN 30 SAMPLES
 
-#   What are our Qsub settings for Variant_Recalibrator?
-#       Below are the recommended settings
-VR_QSUB="mem=250gb,nodes=1:ppn=16,walltime=24:00:00"
-
-#   Which queue are we submitting the job to?
-VR_QUEUE="ram256g"
-
 #   What reference genome are we using?
 #       Include the full file path.
 #       If barley, use the pseudomolecular reference
@@ -508,10 +431,6 @@ PRIOR_4=
 ############################################
 ##########    Variant_Filtering   ##########
 ############################################
-
-#   What are our Qsub settings for Variant_Filtering?
-#       Below are the recommended settings
-VF_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
 
 #   Where is the VCF file to be filtered?
 #	If you used Variant_Recalibrator, leave as the default
@@ -562,10 +481,6 @@ QUAL_CUTOFF=40
 ############################################
 ##########    Variant_Analysis    ##########
 ############################################
-
-#   What are our Qsub settings for Variant_Analysis?
-#       Below are the recommended settings
-VA_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
 
 #   Where is the VCF file? Include the full file path.
 VA_VCF=
