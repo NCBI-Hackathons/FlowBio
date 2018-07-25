@@ -50,10 +50,10 @@ function Loci_Analysis() {
 #   Export the function
 export -f Loci_Analysis
 
-#   A function to run each analysis using GATK
+#   A function to run each analysis
 function Main_Variant_Analysis_GATK() {
     local vcf="$1" # What is our VCF file?
-    local out="$2"/Variant_Analysis_GATK # Where are we storing our results?
+    local out="$2"/Variant_Analysis # Where are we storing our results?
     local seqhand="$3" # Where is the sequence_handling directory located?
     local barley="$4" # Is this barley?
     #   Make sure the out directory exists
@@ -108,52 +108,3 @@ function Main_Variant_Analysis_GATK() {
 
 #   Export the function
 export -f Main_Variant_Analysis_GATK
-
-#   A function to run each analysis using FreeBayes
-function Main_Variant_Analysis_FreeBayes() {
-    local fasta_ref="$1" # What is our fasta reference?
-    local bam="$2" # What is our bam?
-    local out=Variant_Analysis_FreeBayes/$(basename ${2} .vcf)
-
-    #   Make sure the out directory exists
-    mkdir -p Variant_Analysis_FreeBayes
-
-    #run the tool
-    freebayes --fasta-reference "${fasta_ref}" "${bam}" > "${out}"
-}
-
-#   Export the function
-export -f Main_Variant_Analysis_FreeBayes
-
-#   A function to run each analysis using SAMtools
-function Main_Variant_Analysis_SAMtools() {
-    local fasta_ref="$1" # What is our fasta reference?
-    local bam="$2" # What is our bam?
-    local out="$3"/Variant_Analysis_FreeBayes # Where are we storing our results?
-
-    #   Make sure the out directory exists
-    mkdir -p "${out}"
-
-    #run the tool
-    freebayes --fasta-reference "${fasta_ref}" "${bam}" > "${out}"
-}
-
-#   Export the function
-export -f Main_Variant_Analysis_SAMtools
-
-
-#   A function to run each analysis using Platypus
-function Main_Variant_Analysis_Platypus() {
-    local fasta_ref="$1" # What is our fasta reference?
-    local bam="$2" # What is our bam?
-    local out="$3"/Variant_Analysis_FreeBayes # Where are we storing our results?
-
-    #   Make sure the out directory exists
-    mkdir -p "${out}"
-
-    #run the tool
-    freebayes --fasta-reference "${fasta_ref}" "${bam}" > "${out}"
-}
-
-#   Export the function
-export -f Main_Variant_Analysis_Platypus
