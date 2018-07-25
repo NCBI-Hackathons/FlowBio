@@ -67,10 +67,10 @@ function trim_adapters_scythe() {
 export -f trim_adapters_scythe # export the function
 
 #   A driver function to run the adapter trimming function above in parallel
-#   Example Usage: source /autopipeline/handlers/Adapter_Trimming.sh && Main_Adapter_Trimming_Scythe "/autopipeline/data/test_data/list.txt"  "/autopipeline/data"  "TrimmomaticTest" "_R1.fastq.gz" "_R2.fastq.gz" "/autopipeline/data/test_data/accession_list.txt" "0.5" "sanger"
+#   Example Usage: source /autopipeline/handlers/Adapter_Trimming.sh && Main_Adapter_Trimming_Scythe "/autopipeline/data/test_data/list.txt"  "/autopipeline/data"  "TrimmomaticTest" "_R1.fastq.gz" "_R2.fastq.gz" "/autopipeline/data/test_data/illumina_adapters.fa" "0.5" "sanger"
 function Main_Adapter_Trimming_Scythe() {
     local raw_samples="$1" # What is our list of samples?
-    local out_directory="$2"/Adapter_Trimming # Where are we storing our results?
+    local out_directory="$2"/Adapter_Trimming_Scythe # Where are we storing our results?
     local project="$3" # What do we call our results?
     local forward_naming="$4" # What is the extension indicating a forward read?
     local reverse_naming="$5" # What is the extension indicating a reverse read?
@@ -88,7 +88,6 @@ function Main_Adapter_Trimming_Scythe() {
 export -f Main_Adapter_Trimming_Scythe # export the function
 
 #   A function to perform adapter trimming using Trimmomatic
-#   Example Usage: source /autopipeline/handlers/Adapter_Trimming.sh && Main_Adapter_Trimming_Trimmomatic "/autopipeline/data/test_data/GRCh38_reference.fa" "/autopipeline/data/test_data/test_final.bam" 
 function trim_adapters_trimmomatic() {
     local sample="$1" # What sample are we working with?
     local out_dir="$2" # out_directory
@@ -118,20 +117,27 @@ function trim_adapters_trimmomatic() {
     ########## Still need to add support for paired end samples #############
     ########## and changing trimming parameters #############
     #   Trim the sample
-    java -jar "${trimmomatic_jar_file}" SE -phred33 "${sample}" "${out_dir}/${name}_TrimmomaticTrimmed.fastq.gz" ILLUMINACLIP:TruSeq3-SE:2:30:10 LEADING:"${lead_qual_below_n}" TRAILING:"${trail_qual_below_n}" SLIDINGWINDOW:"${win_size}":"${avg_qual_below_n}" MINLEN:"${min_len}"
+    java -jar "${trimmomatic_jar_file}" SE -phred33 "${sample}" "${out_dir}/${name}_TrimmomaticTrimmed.fastq.gz" ILLUMINACLIP:/autopipeline/scripts/trimmomatic/adapters/TruSeq3-SE.fa:2:30:10 LEADING:"${lead_qual_below_n}" TRAILING:"${trail_qual_below_n}" SLIDINGWINDOW:"${win_size}":"${avg_qual_below_n}" MINLEN:"${min_len}"
 }
 
 export -f trim_adapters_trimmomatic
 
+#   Example Usage: source /autopipeline/handlers/Adapter_Trimming.sh && Main_Adapter_Trimming_Trimmomatic "/autopipeline/data/test_data/list.txt"  "/autopipeline/data"  "Trimming_Trimmomatic" "1" "2" "/autopipeline/data/test_data/illumina_adapters.fa" "0.5" "illumina"
 function Main_Adapter_Trimming_Trimmomatic() {
     local raw_samples="$1" # What is our list of samples?
-    local out_directory="$2"/Adapter_Trimming # Where are we storing our results?
+    local out_directory="$2"/Adapter_Trimming_Trimmomatic # Where are we storing our results?
     local project="$3" # What do we call our results?
     local forward_naming="$4" # What is the extension indicating a forward read?
     local reverse_naming="$5" # What is the extension indicating a reverse read?
     local adapters="$6" # What is our adapter file?
     local prior="$7" # What is Scythe's prior?
     local platform="$8" # What platform did we sequence on?
+    local trimmomatic_jar_file="/autopipeline/scripts/trimmomatic/classes/trimmomatic.jar" # Where is the Trimmomatic jar file?
+    local win_size="4" # What platform did we sequence on?
+    local avg_qual_below_n="15" # What platform did we sequence on?
+    local min_len="36" # What platform did we sequence on?
+    #   Make sure the out directory exists
+    mkdir -p "${out_directory}"
     if [[ "$?" -ne 0 ]]; then echo "Unbalanced forward and reverse reads" >&2; exit 1; fi # If not an equal amount, exit out with error
     #   Trim samples in parallel
     parallel trim_adapters_trimmomatic {} "${out_directory}" "${adapters}" "${trimmomatic_jar_file}" "${lead_qual_below_n}" "${trail_qual_below_n}" "${win_size}" "${avg_qual_below_n}" "${min_len}" "${forward_naming}" "${reverse_naming}" :::: "${raw_samples}"
