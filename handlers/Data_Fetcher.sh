@@ -34,6 +34,7 @@ function Main_Fetch_Data() {
     #   Check if out directory exists, if not make it
     mkdir -p "${out_dir}/sra_files"
     #   Download data in parallel
+    
     parallel fetch_data {} "${out_dir}" :::: "${accession_list}"
 }
 
