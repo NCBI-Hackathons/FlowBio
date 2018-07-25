@@ -18,7 +18,7 @@ if (params.PIPELINES){
 				.from(params.PIPELINES)
 				
 }
-if ( params.sras ){
+if ( params.SRA_LIST ){
 	sra_ids_list = params.sras.tokenize(",")
 	//if (!params.read_type) exit 1, "Please submit submit your read type of data (paired end - PE or single end - SE)"
 } else { 
