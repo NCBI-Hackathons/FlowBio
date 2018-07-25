@@ -17,14 +17,38 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
 
 ### Get in the flow, autoflow!
 
+![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/Flowchart_v2.png)
+
+# Usage
+
 ![autoflow process](https://user-images.githubusercontent.com/29574436/43224278-ccd20f0e-9023-11e8-9c03-8337df71e2c8.png)
 
-
-![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/Flowchart_v2.png)
+To run pipeline, fill out the `config` file with filepaths and parameters for processes and tools you select.
 
 # Installation
 
+#### Step 1: Install [Nextflow](https://www.nextflow.io)
 
+Nextflow runs on any POSIX compatible system (i.e. Linux, OS X, Solaris, etc.). Once you have Java 8 or later installed, please use the following steps to install Nextflow:
+
+```bash
+#   Check version of Java
+java -version
+
+#   Download and set up Nextflow
+curl -s https://get.nextflow.io | bash
+
+#   Add Nextflow to PATH
+mv nextflow /usr/local/bin
+```
+
+This pipeline requires Nextflow version >= 0.30.
+
+For more info on using Nextflow, please see [Nextflow documentation](https://www.nextflow.io/docs/latest/index.html) and [NGI-NextflowDocs](https://github.com/SciLifeLab/NGI-NextflowDocs).
+
+#### Step 2: Install Pipeline
+
+Nextflow automatically fetches pipeline from `NCBI-Hackathons/Autoflow`.
 
 # To Do
 - [ ] Check if marker exists in dataset before running entire pipeline - **Chaochih**
