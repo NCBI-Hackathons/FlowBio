@@ -182,10 +182,10 @@ nextflow run /path/to/NCBI-Hackathons/AutoFlow -with-singularity /path/to/ncbiha
     - [ ] Stampy
 - [ ] SAM to BAM/CRAM with Samtools - **TBD**
 - [ ] Variant calling - **TBD**
-    - [x] GATK
+    - [ ] GATK
     - [x] Freebayes
-    - [ ] SAMTools
-    - [ ] Platypus
+    - [x] SAMTools
+    - [x] Platypus
 - [ ] Jupyter notebook - **Devante**
 - [ ] GitHub Documentation - **Devante** & **Chaochih**
 - [ ] Dockerize pipeline - **TBD**
