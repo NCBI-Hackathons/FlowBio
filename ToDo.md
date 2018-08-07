@@ -7,7 +7,7 @@
 - [x] Draft of manuscript - assigned to **Dina**
 - [ ] GUI interface to run entire analysis based on parts selected by user - **Corey Carter**
 - [ ] Generate config file from Google Form - assigned to **TBD**
-- [ ] Wiki pages documentation - assigned to **Skylar Wyant**
+- [ ] Wiki pages documentation - assigned to **Skylar Wyant** & **Chaochih**
 
 ### Nextflow framework
 
