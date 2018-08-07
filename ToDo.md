@@ -6,6 +6,7 @@
 - [x] Get toy dataset - assigned to **Dina**
 - [x] Draft of manuscript - assigned to **Dina**
 - [ ] GUI interface to run entire analysis based on parts selected by user - **Corey Carter**
+- [ ] Generate config file from Google Form - assigned to **TBD**
 
 ### Nextflow framework
 
@@ -51,7 +52,6 @@ These scripts will contain functions for modularity. Each tool will have its own
     - [ ] Do a clean install - assigned to **TBD**
     - [ ] Auto install tools based on ones selected by User - assigned to **TBD**
 - [ ] Add support for Singularity - assigned to **TBD**
-- [ ] Generate config file from Google Form - assigned to **TBD**
 
 ### Reproducibility
 
