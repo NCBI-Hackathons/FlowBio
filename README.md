@@ -17,11 +17,11 @@ Our pipeline allows users to “build” their own pipelines by selecting the pi
 
 ### Get in the flow, autoflow!
 
-![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/Flowchart_v2.png)
+![](https://raw.githubusercontent.com/NCBI-Hackathons/Autoflow/master/images/pipeline.png)
 
 # Usage
 
-![autoflow process](https://user-images.githubusercontent.com/29574436/43224278-ccd20f0e-9023-11e8-9c03-8337df71e2c8.png)
+![autoflow process](https://raw.githubusercontent.com/NCBI-Hackathons/Autoflow/master/images/usage_overview.png)
 
 To run pipeline, there are two steps.
 
