@@ -8,7 +8,7 @@
 - [ ] GUI interface to run entire analysis based on parts selected by user - **Corey Carter**
 - [ ] Generate config file from Google Form - assigned to **TBD**
 - [ ] Auto-generate config file for user to fill out - assigned to **Corey Carter**
-- [ ] Wiki pages documentation - assigned to **Skylar Wyant** & **Chaochih**
+- [ ] Read the docs page for documentation - assigned to **Skylar Wyant** & **Chaochih**
 - [ ] Cleanup intermediate files at end of user specified pipeline - assigned to **Corey Carter**
 
 ### Nextflow framework
