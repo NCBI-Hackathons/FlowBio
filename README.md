@@ -1,4 +1,4 @@
-# Autoflow
+# FlowBio
 
 ![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/logo.png)
 
