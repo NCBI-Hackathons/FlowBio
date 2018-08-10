@@ -55,8 +55,8 @@ These scripts will contain functions for modularity. Each tool will have its own
 
 - [ ] Dockerize pipeline - assigned to **Dina** & **Devante**
     - [ ] Do a clean install - assigned to **TBD**
-    - [ ] Auto install tools based on ones selected by User - assigned to **TBD**
-- [ ] Add support for Singularity - assigned to **TBD**
+    - [ ] Auto install tools based on ones selected by User - assigned to **Devante**
+- [ ] Add support for Singularity - assigned to **Devante**
 
 ### Reproducibility
 
