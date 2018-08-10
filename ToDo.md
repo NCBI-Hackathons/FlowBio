@@ -18,6 +18,7 @@
 - [ ] Finish coding up Nextflow framework - assigned to **Chaochih**
 - [ ] Support for selecting job scheduler in Nextflow pipeline - assigned to **Chaochih** & **TBD**
     - [ ] Support for task arrays on PBS job scheduler - assigned to **Skylar Wyant**
+    - [ ] Look into how Nextflow supported batch schedulers work - assigned to **TBD**
 
 ### Bash scripts
 
@@ -60,4 +61,4 @@ These scripts will contain functions for modularity. Each tool will have its own
 ### Reproducibility
 
 - [ ] Jupyter notebook - assigned to **Devante**
-- [x] GitHub Documentation - assigned to **Chaochih**
+- [ ] GitHub Readme page - assigned to **Chaochih**
