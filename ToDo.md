@@ -5,7 +5,7 @@
 - [ ] Reorganize Github repo tree structure - assigned to **Chaochih**
 - [x] Get toy dataset - assigned to **Dina**
 - [x] Draft of manuscript - assigned to **Dina**
-- [ ] GUI interface to run entire analysis based on parts selected by user - **Corey Carter**
+- [ ] Future feature: GUI interface to run entire analysis based on parts selected by user - **Corey Carter**
 - [ ] Generate config file from Google Form - assigned to **Corey Carter**
 - [ ] Auto-generate config file for user to fill out - assigned to **Corey Carter**
 - [ ] Read the docs page for documentation - assigned to **Skylar Wyant** & **Chaochih**
