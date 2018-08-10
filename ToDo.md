@@ -15,7 +15,8 @@
 
 - [x] Figure out how to add additional components to Nextflow pipeline - assigned to **Anney**
     - [x] Including sourcing bash scripts and using functions within bash scripts - **Anney** (**Chaochih** can help direct which functions are necessary to use)
-- [ ] Support for selecting job scheduler in Nextflow pipeline - assigned to **TBD**
+- [ ] Finish coding up Nextflow framework - assigned to **Chaochih**
+- [ ] Support for selecting job scheduler in Nextflow pipeline - assigned to **Chaochih** & **TBD**
     - [ ] Support for task arrays on PBS job scheduler - assigned to **Skylar Wyant**
 
 ### Bash scripts
