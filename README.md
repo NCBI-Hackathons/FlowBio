@@ -1,6 +1,6 @@
 # FlowBio
 
-![](https://raw.githubusercontent.com/NCBI-Hackathons/Autopipeline/master/images/logo.png)
+![](https://raw.githubusercontent.com/NCBI-Hackathons/FlowBio/master/images/unnamed.png)
 
 [![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A50.30.0-brightgreen.svg)](https://www.nextflow.io/)
 
