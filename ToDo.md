@@ -62,3 +62,4 @@ These scripts will contain functions for modularity. Each tool will have its own
 
 - [ ] Jupyter notebook - assigned to **Devante**
 - [ ] GitHub Readme page - assigned to **Chaochih**
+- [ ] Auto generate a table of dependencies and their versions from user selected tools. Allow users to save this for reproducibility - assigned to **Corey**
